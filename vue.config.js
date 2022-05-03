@@ -52,8 +52,10 @@ module.exports = defineConfig({
   configureWebpack: {
     // plugins: [],
     resolve: {
-      // @fix https://github.com/webpack/webpack/issues/11600
-      fallback: { "path": false },
+      // @fix webpack与nodejs高版本时fs与url等报错 
+      // https://github.com/webpack/webpack/issues/11600
+      // https://stackoverflow.com/questions/57161839/module-not-found-error-cant-resolve-fs-in
+      fallback: { "path": require.resolve("path-browserify"), "url": false, "fs": false },
       alias: {
         '@': resolve('src'),
         // @TODO 目前这个变量仅仅给vue-element-admin使用

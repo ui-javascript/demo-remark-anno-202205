@@ -21,7 +21,6 @@ remark()
   title: Jean Baudrillard
 }
 `, function (err, file) {
-  debugger
   console.log(file.contents)
 })
 

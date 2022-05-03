@@ -1,16 +1,29 @@
 <template>
-  {{ content }}
+sss
 </template>
 
 <script setup>
-import {ref} from "vue"
-import { remark } from 'remark'
-import { annotations } from 'remark-yaml-annotations'
-import { html } from'remark-html'
-import { visit } from 'unist-util-visit'
+// import {ref} from "vue"
+var remark = require('remark')
+var annotations = require('remark-yaml-annotations')
+var html = require('remark-html')
+var visit = require('unist-util-visit')
 
+remark()
+    .use(annotations)
+    .use(renderWikiAnnotations)
+    .use(html)
+    .process(`
+{Jean Baudrillard}[baudrillard] was a very sneaky theorist
 
-const content = ref("")
+[baudrillard] {
+  type: wikipedia
+  title: Jean Baudrillard
+}
+`, function (err, file) {
+  debugger
+  console.log(file.contents)
+})
 
 function renderWikiAnnotations () {
   return function (root, file, done) {
@@ -47,27 +60,6 @@ function definitionTable (ast) {
   })
   return table
 }
-
-remark()
-.use(annotations)
-.use(renderWikiAnnotations)
-.use(html)
-.process(`
-{BYAAAA!}[bya]
-
-[bya] {
-  type: image
-  src: lord-have-mercy.bmp
-  alt: me killing the game
-}
-`, function (err, file) {
-  if (err) {
-    console.log(err)
-    return 
-  }
-  console.log(file.contents)
-  content.value = file.contents
-})
 
 </script>
 

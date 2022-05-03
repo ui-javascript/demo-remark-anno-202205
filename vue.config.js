@@ -52,6 +52,8 @@ module.exports = defineConfig({
   configureWebpack: {
     // plugins: [],
     resolve: {
+      // @fix https://github.com/webpack/webpack/issues/11600
+      fallback: { "path": false },
       alias: {
         '@': resolve('src'),
         // @TODO 目前这个变量仅仅给vue-element-admin使用
